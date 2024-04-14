@@ -7,17 +7,42 @@
 
 import SwiftUI
 
+enum Emojis: String, CaseIterable {
+    case 🥰, 😍, 😘, 💕, 🩷
+}
+
 struct ContentView: View {
+    @State var selection: Emojis = .🥰
+    
     var body: some View {
-        VStack {
-            Image(systemName: "globe")
-                .imageScale(.large)
-                .foregroundStyle(.tint)
-            Text("Hello, world!")
+        
+        NavigationView{
+            
+            
+            VStack {
+                Text(selection.rawValue)
+                    .font(.system(size: 150))
+                
+                Picker("Select lovely Emoji",selection: $selection){ ForEach(Emojis.allCases, id: \.self) {
+                    emoji in Text(emoji.rawValue)
+                    }
+                }
+                .pickerStyle(.segmented)
+            }
+            .navigationBarTitleDisplayMode(.inline)
+            .toolbar {
+                ToolbarItem(placement: .principal) {
+                    Text("Charlottes Emojis")
+                        .padding(.top, 200)
+                        .font(.largeTitle.bold())
+                        .accessibilityAddTraits(.isHeader)
+                }
+            }
+            .padding()
         }
-        .padding()
     }
 }
+
 
 #Preview {
     ContentView()
